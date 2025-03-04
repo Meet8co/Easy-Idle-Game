@@ -11,8 +11,16 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 auto;
+}
+
+.section {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #ddd;
 }
 
 button {
@@ -32,25 +40,9 @@ button:active {
   flex-direction: column;
   gap: 10px;
 }
-#stats {
-  margin-top: 20px;
-  text-align: left;
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
 
 #stats p {
   margin: 5px 0;
-}
-#achievements {
-  margin-top: 20px;
-  text-align: left;
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
 }
 
 .achievement {
@@ -62,4 +54,19 @@ button:active {
 
 .achievement.unlocked {
   background-color: #a5d6a7;
+}
+
+.restart-button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.restart-button:hover {
+  background-color: #cc0000;
 }
