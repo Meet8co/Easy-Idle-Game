@@ -2,6 +2,10 @@ let points = 0;
 let totalPointsEarned = 0;
 let totalClicks = 0;
 let totalUpgradesPurchased = 0;
+let prestigeLevel = 0;
+let prestigeBonus = 1;
+let highestPoints = 0;
+
 let upgrades = [
   { id: 1, name: "Auto-Clicker", cost: 10, level: 0, income: 1 },
   { id: 2, name: "Mega-Clicker", cost: 50, level: 0, income: 5 },
@@ -28,19 +32,30 @@ const totalUpgradesDisplay = document.getElementById('total-upgrades');
 const passiveIncomeDisplay = document.getElementById('passive-income');
 const achievementsContainer = document.getElementById('achievements');
 const restartButton = document.getElementById('restart-button');
+const prestigeButton = document.getElementById('prestige-button');
+const prestigeLevelDisplay = document.getElementById('prestige-level');
+const prestigeBonusDisplay = document.getElementById('prestige-bonus');
+const highestPointsDisplay = document.getElementById('highest-points');
+const themeToggle = document.getElementById('theme-toggle');
+
+// Audio Elements
+const clickSound = document.getElementById('click-sound');
+const upgradeSound = document.getElementById('upgrade-sound');
+const achievementSound = document.getElementById('achievement-sound');
 
 // Load saved game
 loadGame();
 
 // Click Event
 clickButton.addEventListener('click', () => {
-  points++;
-  totalPointsEarned++;
+  points += prestigeBonus;
+  totalPointsEarned += prestigeBonus;
   totalClicks++;
   updatePoints();
   animateButton(clickButton);
   updateStats();
   checkAchievements();
+  clickSound.play();
 });
 
 // Restart Event
@@ -48,6 +63,33 @@ restartButton.addEventListener('click', () => {
   if (confirm("Are you sure you want to restart the game? All progress will be lost!")) {
     restartGame();
   }
+});
+
+// Prestige Event
+prestigeButton.addEventListener('click', () => {
+  if (points >= 10000) {
+    prestigeLevel++;
+    prestigeBonus *= 2;
+    points = 0;
+    totalPointsEarned = 0;
+    totalClicks = 0;
+    totalUpgradesPurchased = 0;
+    upgrades.forEach(upgrade => {
+      upgrade.level = 0;
+      upgrade.cost = [10, 50, 100, 500, 1000][upgrade.id - 1]; // Reset costs
+    });
+    updatePoints();
+    updateStats();
+    renderAchievements();
+    alert(`Prestige Level ${prestigeLevel} unlocked! Bonus: ${prestigeBonus}x`);
+  } else {
+    alert("You need at least 10,000 points to prestige!");
+  }
+});
+
+// Theme Toggle Event
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-theme');
 });
 
 // Render Upgrades
@@ -73,6 +115,7 @@ function buyUpgrade(upgrade) {
     renderUpgrades();
     updateStats();
     checkAchievements();
+    upgradeSound.play();
   }
 }
 
@@ -82,8 +125,8 @@ setInterval(() => {
   upgrades.forEach(upgrade => {
     passiveIncome += upgrade.level * upgrade.income;
   });
-  points += passiveIncome;
-  totalPointsEarned += passiveIncome;
+  points += passiveIncome * prestigeBonus;
+  totalPointsEarned += passiveIncome * prestigeBonus;
   updatePoints();
   updateStats();
   checkAchievements();
@@ -101,7 +144,11 @@ function updateStats() {
   totalPointsDisplay.textContent = totalPointsEarned;
   totalClicksDisplay.textContent = totalClicks;
   totalUpgradesDisplay.textContent = totalUpgradesPurchased;
-  passiveIncomeDisplay.textContent = calculatePassiveIncome();
+  passiveIncomeDisplay.textContent = calculatePassiveIncome() * prestigeBonus;
+  prestigeLevelDisplay.textContent = prestigeLevel;
+  prestigeBonusDisplay.textContent = `${prestigeBonus}x`;
+  highestPoints = Math.max(highestPoints, totalPointsEarned);
+  highestPointsDisplay.textContent = highestPoints;
 }
 
 // Calculate Passive Income
@@ -132,6 +179,7 @@ function checkAchievements() {
     if (!achievement.unlocked && achievement.condition(gameState)) {
       achievement.unlocked = true;
       alert(`Achievement Unlocked: ${achievement.name}`);
+      achievementSound.play();
     }
   });
   renderAchievements();
@@ -147,6 +195,9 @@ function saveGame() {
     totalUpgradesPurchased,
     upgrades,
     achievements,
+    prestigeLevel,
+    prestigeBonus,
+    highestPoints,
   }));
 }
 
@@ -160,6 +211,9 @@ function loadGame() {
     totalUpgradesPurchased = savedGame.totalUpgradesPurchased || 0;
     upgrades = savedGame.upgrades || [];
     achievements = savedGame.achievements || [];
+    prestigeLevel = savedGame.prestigeLevel || 0;
+    prestigeBonus = savedGame.prestigeBonus || 1;
+    highestPoints = savedGame.highestPoints || 0;
     updatePoints();
     updateStats();
     renderAchievements();
@@ -172,6 +226,8 @@ function restartGame() {
   totalPointsEarned = 0;
   totalClicks = 0;
   totalUpgradesPurchased = 0;
+  prestigeLevel = 0;
+  prestigeBonus = 1;
   upgrades.forEach(upgrade => {
     upgrade.level = 0;
     upgrade.cost = [10, 50, 100, 500, 1000][upgrade.id - 1]; // Reset costs
@@ -185,9 +241,9 @@ function restartGame() {
 
 // Button Animation
 function animateButton(button) {
-  button.style.transform = 'scale(0.95)';
+  button.classList.add('click-animation');
   setTimeout(() => {
-    button.style.transform = 'scale(1)';
+    button.classList.remove('click-animation');
   }, 100);
 }
 
