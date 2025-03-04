@@ -30,7 +30,8 @@
           <p>Total Clicks: <span id="total-clicks">0</span></p>
           <p>Total Upgrades Purchased: <span id="total-upgrades">0</span></p>
           <p>Passive Income/Sec: <span id="passive-income">0</span></p>
-          <p>Prestige Points: <span id="prestige-points">0</span></p>
+          <p>Prestige Level: <span id="prestige-level">0</span></p>
+          <p>Prestige Bonus: <span id="prestige-bonus">1x</span></p>
         </div>
       </div>
 
@@ -39,7 +40,7 @@
         <h2>Game</h2>
         <p>Points: <span id="points">0</span></p>
         <button id="click-button">Click Me!</button>
-        <button id="prestige-button" class="prestige-button">Prestige (Reset for Prestige Points)</button>
+        <button id="prestige-button" class="prestige-button" title="Reset your progress for a permanent bonus!">Prestige</button>
       </div>
 
       <!-- Achievements Section (Bottom Row) -->
@@ -48,15 +49,19 @@
         <div id="achievements">
           <!-- Achievements will be dynamically added here -->
         </div>
-        <div id="achievement-progress">
-          <p>Next Achievement: <span id="next-achievement">First Click</span></p>
-          <progress id="achievement-progress-bar" value="0" max="100"></progress>
+      </div>
+
+      <!-- Leaderboard Section (Bottom Row) -->
+      <div class="section leaderboard-section">
+        <h2>Leaderboard</h2>
+        <div id="leaderboard">
+          <p>Highest Points: <span id="highest-points">0</span></p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Audio Elements -->
+  <!-- Audio Elements for Sound Effects -->
   <audio id="click-sound" src="click.mp3"></audio>
   <audio id="upgrade-sound" src="upgrade.mp3"></audio>
   <audio id="achievement-sound" src="achievement.mp3"></audio>
