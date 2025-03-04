@@ -27,6 +27,7 @@ const totalClicksDisplay = document.getElementById('total-clicks');
 const totalUpgradesDisplay = document.getElementById('total-upgrades');
 const passiveIncomeDisplay = document.getElementById('passive-income');
 const achievementsContainer = document.getElementById('achievements');
+const restartButton = document.getElementById('restart-button');
 
 // Load saved game
 loadGame();
@@ -40,6 +41,13 @@ clickButton.addEventListener('click', () => {
   animateButton(clickButton);
   updateStats();
   checkAchievements();
+});
+
+// Restart Event
+restartButton.addEventListener('click', () => {
+  if (confirm("Are you sure you want to restart the game? All progress will be lost!")) {
+    restartGame();
+  }
 });
 
 // Render Upgrades
@@ -149,6 +157,23 @@ function loadGame() {
     updateStats();
     renderAchievements();
   }
+}
+
+// Restart Game
+function restartGame() {
+  points = 0;
+  totalPointsEarned = 0;
+  totalClicks = 0;
+  totalUpgradesPurchased = 0;
+  upgrades.forEach(upgrade => {
+    upgrade.level = 0;
+    upgrade.cost = [10, 50, 100, 500, 1000][upgrade.id - 1]; // Reset costs
+  });
+  achievements.forEach(achievement => achievement.unlocked = false);
+  localStorage.removeItem('idleGame');
+  updatePoints();
+  updateStats();
+  renderAchievements();
 }
 
 // Button Animation
