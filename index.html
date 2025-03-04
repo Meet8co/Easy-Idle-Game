@@ -11,37 +11,40 @@
     <h1>Idle Game</h1>
     <button id="restart-button" class="restart-button">Restart Game</button>
 
-    <!-- Game Section -->
-    <div class="section">
-      <h2>Game</h2>
-      <p>Points: <span id="points">0</span></p>
-      <button id="click-button">Click Me!</button>
-    </div>
-
-    <!-- Upgrades Section -->
-    <div class="section">
-      <h2>Upgrades</h2>
-      <div id="upgrades">
-        <!-- Upgrades will be dynamically added here -->
+    <!-- Grid Layout -->
+    <div class="grid-container">
+      <!-- Upgrades Section (Top Left) -->
+      <div class="section upgrades-section">
+        <h2>Upgrades</h2>
+        <div id="upgrades">
+          <!-- Upgrades will be dynamically added here -->
+        </div>
       </div>
-    </div>
 
-    <!-- Stats Section -->
-    <div class="section">
-      <h2>Stats</h2>
-      <div id="stats">
-        <p>Total Points Earned: <span id="total-points">0</span></p>
-        <p>Total Clicks: <span id="total-clicks">0</span></p>
-        <p>Total Upgrades Purchased: <span id="total-upgrades">0</span></p>
-        <p>Passive Income/Sec: <span id="passive-income">0</span></p>
+      <!-- Stats Section (Top Right) -->
+      <div class="section stats-section">
+        <h2>Stats</h2>
+        <div id="stats">
+          <p>Total Points Earned: <span id="total-points">0</span></p>
+          <p>Total Clicks: <span id="total-clicks">0</span></p>
+          <p>Total Upgrades Purchased: <span id="total-upgrades">0</span></p>
+          <p>Passive Income/Sec: <span id="passive-income">0</span></p>
+        </div>
       </div>
-    </div>
 
-    <!-- Achievements Section -->
-    <div class="section">
-      <h2>Achievements</h2>
-      <div id="achievements">
-        <!-- Achievements will be dynamically added here -->
+      <!-- Game Section (Middle) -->
+      <div class="section game-section">
+        <h2>Game</h2>
+        <p>Points: <span id="points">0</span></p>
+        <button id="click-button">Click Me!</button>
+      </div>
+
+      <!-- Achievements Section (Bottom Row) -->
+      <div class="section achievements-section">
+        <h2>Achievements</h2>
+        <div id="achievements">
+          <!-- Achievements will be dynamically added here -->
+        </div>
       </div>
     </div>
   </div>
