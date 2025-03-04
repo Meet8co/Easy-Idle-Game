@@ -32,3 +32,15 @@ button:active {
   flex-direction: column;
   gap: 10px;
 }
+#stats {
+  margin-top: 20px;
+  text-align: left;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+#stats p {
+  margin: 5px 0;
+}
