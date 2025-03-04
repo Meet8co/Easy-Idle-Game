@@ -122,13 +122,20 @@ function renderAchievements() {
 
 // Check Achievements
 function checkAchievements() {
+  let gameState = {
+    totalPointsEarned,
+    totalClicks,
+    totalUpgradesPurchased,
+  };
+
   achievements.forEach(achievement => {
-    if (!achievement.unlocked && achievement.condition({ totalPointsEarned, totalClicks, totalUpgradesPurchased })) {
+    if (!achievement.unlocked && achievement.condition(gameState)) {
       achievement.unlocked = true;
       alert(`Achievement Unlocked: ${achievement.name}`);
     }
   });
   renderAchievements();
+  saveGame();
 }
 
 // Save Game
