@@ -6,6 +6,16 @@ let upgrades = [
   { id: 1, name: "Auto-Clicker", cost: 10, level: 0, income: 1 },
   { id: 2, name: "Mega-Clicker", cost: 50, level: 0, income: 5 },
   { id: 3, name: "Super-Clicker", cost: 100, level: 0, income: 10 },
+  { id: 4, name: "Ultra-Clicker", cost: 500, level: 0, income: 50 },
+  { id: 5, name: "Omega-Clicker", cost: 1000, level: 0, income: 100 },
+];
+
+let achievements = [
+  { id: 1, name: "First Click", condition: (game) => game.totalClicks >= 1, unlocked: false },
+  { id: 2, name: "100 Points", condition: (game) => game.totalPointsEarned >= 100, unlocked: false },
+  { id: 3, name: "10 Upgrades", condition: (game) => game.totalUpgradesPurchased >= 10, unlocked: false },
+  { id: 4, name: "1,000 Points", condition: (game) => game.totalPointsEarned >= 1000, unlocked: false },
+  { id: 5, name: "50 Clicks", condition: (game) => game.totalClicks >= 50, unlocked: false },
 ];
 
 // DOM Elements
@@ -16,6 +26,7 @@ const totalPointsDisplay = document.getElementById('total-points');
 const totalClicksDisplay = document.getElementById('total-clicks');
 const totalUpgradesDisplay = document.getElementById('total-upgrades');
 const passiveIncomeDisplay = document.getElementById('passive-income');
+const achievementsContainer = document.getElementById('achievements');
 
 // Load saved game
 loadGame();
@@ -28,6 +39,7 @@ clickButton.addEventListener('click', () => {
   updatePoints();
   animateButton(clickButton);
   updateStats();
+  checkAchievements();
 });
 
 // Render Upgrades
@@ -52,6 +64,7 @@ function buyUpgrade(upgrade) {
     updatePoints();
     renderUpgrades();
     updateStats();
+    checkAchievements();
   }
 }
 
@@ -65,6 +78,7 @@ setInterval(() => {
   totalPointsEarned += passiveIncome;
   updatePoints();
   updateStats();
+  checkAchievements();
 }, 1000);
 
 // Update Points Display
@@ -87,6 +101,28 @@ function calculatePassiveIncome() {
   return upgrades.reduce((total, upgrade) => total + upgrade.level * upgrade.income, 0);
 }
 
+// Render Achievements
+function renderAchievements() {
+  achievementsContainer.innerHTML = '';
+  achievements.forEach(achievement => {
+    const div = document.createElement('div');
+    div.className = `achievement ${achievement.unlocked ? 'unlocked' : ''}`;
+    div.textContent = `${achievement.name} ${achievement.unlocked ? '✅' : ''}`;
+    achievementsContainer.appendChild(div);
+  });
+}
+
+// Check Achievements
+function checkAchievements() {
+  achievements.forEach(achievement => {
+    if (!achievement.unlocked && achievement.condition({ totalPointsEarned, totalClicks, totalUpgradesPurchased })) {
+      achievement.unlocked = true;
+      alert(`Achievement Unlocked: ${achievement.name}`);
+    }
+  });
+  renderAchievements();
+}
+
 // Save Game
 function saveGame() {
   localStorage.setItem('idleGame', JSON.stringify({
@@ -95,6 +131,7 @@ function saveGame() {
     totalClicks,
     totalUpgradesPurchased,
     upgrades,
+    achievements,
   }));
 }
 
@@ -102,13 +139,15 @@ function saveGame() {
 function loadGame() {
   const savedGame = JSON.parse(localStorage.getItem('idleGame'));
   if (savedGame) {
-    points = savedGame.points;
-    totalPointsEarned = savedGame.totalPointsEarned;
-    totalClicks = savedGame.totalClicks;
-    totalUpgradesPurchased = savedGame.totalUpgradesPurchased;
-    upgrades = savedGame.upgrades;
+    points = savedGame.points || 0;
+    totalPointsEarned = savedGame.totalPointsEarned || 0;
+    totalClicks = savedGame.totalClicks || 0;
+    totalUpgradesPurchased = savedGame.totalUpgradesPurchased || 0;
+    upgrades = savedGame.upgrades || [];
+    achievements = savedGame.achievements || [];
     updatePoints();
     updateStats();
+    renderAchievements();
   }
 }
 
@@ -123,3 +162,4 @@ function animateButton(button) {
 // Initial Render
 renderUpgrades();
 updateStats();
+renderAchievements();
