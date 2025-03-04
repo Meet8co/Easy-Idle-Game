@@ -44,3 +44,22 @@ button:active {
 #stats p {
   margin: 5px 0;
 }
+#achievements {
+  margin-top: 20px;
+  text-align: left;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.achievement {
+  margin: 5px 0;
+  padding: 5px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+}
+
+.achievement.unlocked {
+  background-color: #a5d6a7;
+}
