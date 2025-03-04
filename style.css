@@ -1,9 +1,12 @@
 body {
   font-family: Arial, sans-serif;
-  text-align: center;
   background-color: #f4f4f4;
   margin: 0;
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .game-container {
@@ -11,16 +14,40 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  grid-template-rows: auto auto; /* Two rows */
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .section {
-  margin: 20px 0;
-  padding: 15px;
   background-color: #f9f9f9;
+  padding: 15px;
   border-radius: 10px;
   border: 1px solid #ddd;
+}
+
+.upgrades-section {
+  grid-column: 1 / 2; /* Top Left */
+}
+
+.stats-section {
+  grid-column: 2 / 3; /* Top Right */
+}
+
+.game-section {
+  grid-column: 1 / 3; /* Middle (spans both columns) */
+  text-align: center;
+}
+
+.achievements-section {
+  grid-column: 1 / 3; /* Bottom Row (spans both columns) */
 }
 
 button {
